@@ -1,75 +1,33 @@
-# 🎯 Taller Práctico: Copilot CLI en 10min
+# 🤖 Taller: Automatización de Proyectos con GitHub Copilot y MCP Server
 
-## Generador de Tarjetas Digitales QuickBuild
+## DevFest Ica 2025
+---
 
-> **¡Crea una aplicación web completa en solo 10 minutos con GitHub Copilot CLI!**
+## 🎯 Objetivo del Taller
 
-[![Open in GitHub Codespaces](https://img.shields.io/badge/Open%20in-Codespaces-blue?logo=github)](https://codespaces.new/Dav082004/DevFestIca2025)
+En este taller, descubrirás cómo usar **GitHub Copilot** y **MCP Server (Model Context Protocol)** para automatizar la gestión de tus proyectos de software. Aprenderás a transformar un documento de requerimientos en un plan de trabajo accionable dentro de GitHub, todo mediante comandos de lenguaje natural.
+
+Exploraremos cómo:
+1.  **Analizar archivos de requerimientos** (`.md`, `.pdf`, etc.) para extraer tareas.
+2.  **Generar issues de GitHub automáticamente**, con descripciones claras y labels de complejidad.
+3.  **Organizar el backlog** de tu proyecto y conectarlo a **GitHub Projects** para un seguimiento visual.
 
 ---
 
-## 🎤 Sobre la Charla
+## 🚀 Ejercicio Central: El Prompt Mágico
 
-**DevFest Ica 2025 - GitHub Copilot CLI y MCP SERVER: Automatización y Novedades**
+Durante el taller, usaremos el siguiente prompt para que Copilot analice los requerimientos y estructure nuestro plan de trabajo. ¡Cópialo y úsalo en tu terminal!
 
-Descubre cómo GitHub Copilot CLI lleva la inteligencia artificial directamente a tu terminal, revolucionando la productividad y automatización para desarrolladores. Exploraremos cómo interactuar con la IA usando lenguaje natural en la línea de comandos, las integraciones profundas con GitHub, y las últimas novedades que potencian flujos de trabajo modernos.
-
----
-
-## 🚀 Comenzar
-
-1. **Forkea** este repositorio
-2. **Abre en Codespaces**
-3. **Ejecuta en terminal:**
-   ```bash
-   github-copilot-cli auth
-   ```
-4. Sigue la guía en `WORKSHOP.md`
-
----
-
-## 📁 Estructura
-
+```bash
+Analiza el archivo 'project/requirements.md' y genera una issue para cumplir con los requerimientos, la issue debe tener descripción clara y una estimación de complejidad mediante labels
 ```
-├── project/          # Tu código aquí
-├── prompts/          # Secuencia de la demo
-├── .devcontainer/    # Entorno preconfigurado
-└── .github/agents/   # Asistente especializado
-```
+---
+
+## 📁 Estructura del Repositorio
+
+-   `project/requirements.md`: El documento con los requisitos que analizaremos.
+-   `.github/agents/`: Agentes de IA especializados que nos ayudarán.
 
 ---
 
-## 🎯 Caso de Estudio
-
-**QuickBuild Cards** - Empresa con 15 años en tarjetas físicas que necesita tu ayuda para crear su primer generador de tarjetas digitales.
-
----
-
-## ⏱️ Timeline
-
-- **0-2min**: Setup y autenticación
-- **2-8min**: Desarrollo con Copilot CLI
-- **8-10min**: Pruebas y demostración
-
----
-
-## 🛠️ Tecnologías
-
-- GitHub Copilot CLI
-- HTML5 + CSS3 + JavaScript
-- GitHub Codespaces
-- Live Server
-
----
-
-## 📞 Soporte
-
-¿Problemas durante el taller?
-
-- Revisa `WORKSHOP.md`
-- Consulta al agente en `.github/agents/`
-- Abre un issue
-
----
-
-**¿Listo para codificar a la velocidad de la IA? 🚀**
+**¿Listo para dejar que la IA organice tu proyecto? 🚀**

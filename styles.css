@@ -1,0 +1,359 @@
+/* ===============================================
+   QuickBuild Cards - Estilos CSS
+   Tarjeta de Presentación Digital Profesional
+   =============================================== */
+
+/* ===== Variables CSS (Paleta de Colores Corporativa) ===== */
+:root {
+    --color-primary: #2563eb;      /* Azul QuickBuild */
+    --color-secondary: #f8fafc;    /* Gris claro */
+    --color-text: #1e293b;         /* Gris oscuro */
+    --color-success: #10b981;      /* Verde */
+    --color-border: #e2e8f0;       /* Gris suave */
+    --color-white: #ffffff;
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
+    --transition-default: all 0.3s ease;
+}
+
+/* ===== Reset y Estilos Base ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ===== Contenedor Principal ===== */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===== Estilos del Formulario ===== */
+.form-container {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-card);
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid var(--color-border);
+}
+
+.form-container h2 {
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: var(--transition-default);
+    background-color: var(--color-white);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #94a3b8;
+}
+
+/* ===== Botones ===== */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-default);
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+}
+
+.btn-success {
+    background-color: var(--color-success);
+    color: var(--color-white);
+}
+
+.btn-success:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+}
+
+/* ===== Tarjeta de Presentación ===== */
+.card-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.card {
+    background: linear-gradient(135deg, var(--color-white) 0%, var(--color-secondary) 100%);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-card);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-default);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--color-primary) 0%, #3b82f6 100%);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+/* ===== Contenido de la Tarjeta ===== */
+.card-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.card-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 5px;
+}
+
+.card-title {
+    font-size: 1rem;
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+.card-company {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.card-body {
+    padding: 10px 0;
+}
+
+.card-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 8px 0;
+}
+
+.card-info-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(37, 99, 235, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+}
+
+.card-info-text {
+    color: var(--color-text);
+    font-size: 0.95rem;
+}
+
+.card-info-text a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: var(--transition-default);
+}
+
+.card-info-text a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+/* ===== Botón Copiar ===== */
+.copy-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-default);
+}
+
+.copy-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.copy-btn.copied {
+    background-color: var(--color-success);
+}
+
+/* ===== Mensajes de Estado ===== */
+.message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.message-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+}
+
+.message-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+/* ===== Diseño Responsive ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    .card-name {
+        font-size: 1.3rem;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container h2 {
+        font-size: 1.25rem;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .card-name {
+        font-size: 1.2rem;
+    }
+
+    .card-info-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .card-info-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== Animaciones ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ===== Título Principal ===== */
+h1 {
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* ===== Preview Section ===== */
+.preview-section {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-card);
+    padding: 30px;
+    border: 1px solid var(--color-border);
+}
+
+.preview-section h2 {
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--color-primary);
+    padding-bottom: 10px;
+}

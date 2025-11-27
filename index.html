@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBuild Cards - Generador de Tarjetas Digitales</title>
+    <style>
+        /* ============================================
+           Variables CSS - Paleta de Colores Corporativa
+           ============================================ */
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #f8fafc;
+            --color-text: #1e293b;
+            --color-success: #10b981;
+            --color-border: #e2e8f0;
+            --color-background: #ffffff;
+            --color-error: #ef4444;
+        }
+
+        /* ============================================
+           Reset y Estilos Base
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           Header
+           ============================================ */
+        .header {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        /* ============================================
+           Contenedor Principal - Mobile First
+           ============================================ */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .app-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* ============================================
+           Sección del Formulario
+           ============================================ */
+        .form-section {
+            background-color: var(--color-background);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--color-border);
+        }
+
+        .form-section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-section h2::before {
+            content: "📝";
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+
+        .form-group label .required {
+            color: var(--color-error);
+            margin-left: 0.25rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: var(--color-background);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group input.error {
+            border-color: var(--color-error);
+        }
+
+        .form-group input.valid {
+            border-color: var(--color-success);
+        }
+
+        .error-message {
+            color: var(--color-error);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-background);
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           Sección de Visualización de Tarjeta
+           ============================================ */
+        .preview-section {
+            background-color: var(--color-background);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--color-border);
+        }
+
+        .preview-section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .preview-section h2::before {
+            content: "👁️";
+        }
+
+        /* ============================================
+           Tarjeta de Presentación
+           ============================================ */
+        .card-preview {
+            background: linear-gradient(135deg, var(--color-background) 0%, var(--color-secondary) 100%);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            border: 2px solid var(--color-border);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            min-height: 220px;
+        }
+
+        .card-preview::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--color-primary), #3b82f6);
+        }
+
+        .card-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        .card-placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .card-placeholder-text {
+            font-size: 1rem;
+        }
+
+        .card-content {
+            display: none;
+        }
+
+        .card-content.visible {
+            display: block;
+        }
+
+        .card-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-position {
+            font-size: 1rem;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-company {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 1.25rem;
+            font-style: italic;
+        }
+
+        .card-divider {
+            width: 60px;
+            height: 3px;
+            background-color: var(--color-primary);
+            margin-bottom: 1.25rem;
+            border-radius: 2px;
+        }
+
+        .card-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .card-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--color-text);
+        }
+
+        .card-contact-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(37, 99, 235, 0.1);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .card-contact-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--color-primary);
+        }
+
+        /* ============================================
+           Botones de Acción
+           ============================================ */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary {
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+            border: 2px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-border);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: var(--color-success);
+            color: var(--color-background);
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ============================================
+           Toast de Confirmación
+           ============================================ */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--color-success);
+            color: var(--color-background);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        /* ============================================
+           Footer
+           ============================================ */
+        .footer {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================
+           Media Queries - Responsive Design
+           ============================================ */
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .main-container {
+                padding: 2rem;
+            }
+
+            .app-grid {
+                flex-direction: row;
+            }
+
+            .form-section,
+            .preview-section {
+                flex: 1;
+                padding: 2rem;
+            }
+
+            .card-preview {
+                padding: 2.5rem 2rem;
+            }
+
+            .card-name {
+                font-size: 1.75rem;
+            }
+
+            .action-buttons {
+                flex-direction: row;
+            }
+
+            .action-buttons .btn {
+                flex: 1;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .header h1 {
+                font-size: 2.25rem;
+            }
+
+            .form-section h2,
+            .preview-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>QuickBuild Cards</h1>
+        <p>Generador de Tarjetas de Presentación Digitales</p>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <main class="main-container">
+        <div class="app-grid">
+            <!-- Formulario de Datos -->
+            <section class="form-section">
+                <h2>Datos de la Tarjeta</h2>
+                <form id="cardForm">
+                    <!-- Campo: Nombre Completo -->
+                    <div class="form-group">
+                        <label for="nombre">
+                            Nombre completo
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="nombre" 
+                            name="nombre" 
+                            placeholder="Ej: Juan Pérez García"
+                            required
+                        >
+                        <p class="error-message" id="nombreError">El nombre es obligatorio</p>
+                    </div>
+
+                    <!-- Campo: Cargo -->
+                    <div class="form-group">
+                        <label for="cargo">Cargo</label>
+                        <input 
+                            type="text" 
+                            id="cargo" 
+                            name="cargo" 
+                            placeholder="Ej: Director de Marketing"
+                        >
+                    </div>
+
+                    <!-- Campo: Empresa -->
+                    <div class="form-group">
+                        <label for="empresa">Empresa</label>
+                        <input 
+                            type="text" 
+                            id="empresa" 
+                            name="empresa" 
+                            placeholder="Ej: QuickBuild Inc."
+                        >
+                    </div>
+
+                    <!-- Campo: Email -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Ej: juan@empresa.com"
+                        >
+                        <p class="error-message" id="emailError">Por favor, ingresa un email válido</p>
+                    </div>
+
+                    <!-- Campo: Teléfono -->
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input 
+                            type="tel" 
+                            id="telefono" 
+                            name="telefono" 
+                            placeholder="Ej: +51 999 888 777"
+                        >
+                    </div>
+
+                    <!-- Botón Generar -->
+                    <button type="submit" class="btn btn-primary">
+                        <span>✨</span>
+                        Generar Tarjeta
+                    </button>
+                </form>
+            </section>
+
+            <!-- Visualización de Tarjeta -->
+            <section class="preview-section">
+                <h2>Vista Previa</h2>
+                
+                <!-- Tarjeta de Presentación -->
+                <div class="card-preview" id="cardPreview">
+                    <!-- Placeholder cuando no hay tarjeta -->
+                    <div class="card-placeholder" id="cardPlaceholder">
+                        <div class="card-placeholder-icon">💼</div>
+                        <p class="card-placeholder-text">Completa el formulario para ver tu tarjeta</p>
+                    </div>
+
+                    <!-- Contenido de la Tarjeta -->
+                    <div class="card-content" id="cardContent">
+                        <h3 class="card-name" id="cardName"></h3>
+                        <p class="card-position" id="cardPosition"></p>
+                        <p class="card-company" id="cardCompany"></p>
+                        <div class="card-divider"></div>
+                        <div class="card-contact">
+                            <div class="card-contact-item" id="cardEmailContainer" style="display: none;">
+                                <div class="card-contact-icon">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                    </svg>
+                                </div>
+                                <span id="cardEmail"></span>
+                            </div>
+                            <div class="card-contact-item" id="cardPhoneContainer" style="display: none;">
+                                <div class="card-contact-icon">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                    </svg>
+                                </div>
+                                <span id="cardPhone"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-success" id="btnExportJPG" disabled>
+                        <span>📷</span>
+                        Exportar JPG
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="btnCopyHTML" disabled>
+                        <span>📋</span>
+                        Copiar HTML
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Toast de Confirmación -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✅</span>
+        <span id="toastMessage">¡Copiado al portapapeles!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 <a href="#">QuickBuild Cards</a> - 15 años creando conexiones profesionales</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        /**
+         * QuickBuild Cards - Generador de Tarjetas Digitales
+         * JavaScript Vanilla - Sin frameworks externos
+         */
+
+        // ============================================
+        // Referencias a elementos del DOM
+        // ============================================
+        const form = document.getElementById('cardForm');
+        const nombreInput = document.getElementById('nombre');
+        const cargoInput = document.getElementById('cargo');
+        const empresaInput = document.getElementById('empresa');
+        const emailInput = document.getElementById('email');
+        const telefonoInput = document.getElementById('telefono');
+
+        const cardPlaceholder = document.getElementById('cardPlaceholder');
+        const cardContent = document.getElementById('cardContent');
+        const cardName = document.getElementById('cardName');
+        const cardPosition = document.getElementById('cardPosition');
+        const cardCompany = document.getElementById('cardCompany');
+        const cardEmail = document.getElementById('cardEmail');
+        const cardPhone = document.getElementById('cardPhone');
+        const cardEmailContainer = document.getElementById('cardEmailContainer');
+        const cardPhoneContainer = document.getElementById('cardPhoneContainer');
+
+        const btnExportJPG = document.getElementById('btnExportJPG');
+        const btnCopyHTML = document.getElementById('btnCopyHTML');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        const nombreError = document.getElementById('nombreError');
+        const emailError = document.getElementById('emailError');
+
+        // Variable para controlar si la tarjeta ha sido generada
+        let cardGenerated = false;
+
+        // ============================================
+        // Funciones de Validación
+        // ============================================
+
+        /**
+         * Valida que el nombre no esté vacío
+         * @param {string} nombre - El nombre a validar
+         * @returns {boolean} - true si es válido
+         */
+        function validateNombre(nombre) {
+            return nombre.trim().length > 0;
+        }
+
+        /**
+         * Valida el formato del email
+         * @param {string} email - El email a validar
+         * @returns {boolean} - true si es válido o está vacío
+         */
+        function validateEmail(email) {
+            if (email.trim() === '') return true; // Email es opcional
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        /**
+         * Muestra u oculta mensajes de error
+         * @param {HTMLElement} input - El campo de entrada
+         * @param {HTMLElement} errorElement - El elemento de error
+         * @param {boolean} isValid - Si el campo es válido
+         */
+        function toggleError(input, errorElement, isValid) {
+            if (isValid) {
+                input.classList.remove('error');
+                input.classList.add('valid');
+                errorElement.classList.remove('show');
+            } else {
+                input.classList.add('error');
+                input.classList.remove('valid');
+                errorElement.classList.add('show');
+            }
+        }
+
+        // ============================================
+        // Funciones de Generación de Tarjeta
+        // ============================================
+
+        /**
+         * Genera y muestra la tarjeta con los datos del formulario
+         */
+        function generateCard() {
+            const nombre = nombreInput.value.trim();
+            const cargo = cargoInput.value.trim();
+            const empresa = empresaInput.value.trim();
+            const email = emailInput.value.trim();
+            const telefono = telefonoInput.value.trim();
+
+            // Validar campos
+            const isNombreValid = validateNombre(nombre);
+            const isEmailValid = validateEmail(email);
+
+            toggleError(nombreInput, nombreError, isNombreValid);
+            toggleError(emailInput, emailError, isEmailValid || email === '');
+
+            if (!isNombreValid || !isEmailValid) {
+                return false;
+            }
+
+            // Actualizar contenido de la tarjeta
+            cardName.textContent = nombre;
+            cardPosition.textContent = cargo || '';
+            cardPosition.style.display = cargo ? 'block' : 'none';
+            cardCompany.textContent = empresa || '';
+            cardCompany.style.display = empresa ? 'block' : 'none';
+
+            // Mostrar/ocultar email
+            if (email) {
+                cardEmail.textContent = email;
+                cardEmailContainer.style.display = 'flex';
+            } else {
+                cardEmailContainer.style.display = 'none';
+            }
+
+            // Mostrar/ocultar teléfono
+            if (telefono) {
+                cardPhone.textContent = telefono;
+                cardPhoneContainer.style.display = 'flex';
+            } else {
+                cardPhoneContainer.style.display = 'none';
+            }
+
+            // Mostrar tarjeta y ocultar placeholder
+            cardPlaceholder.style.display = 'none';
+            cardContent.classList.add('visible');
+
+            // Habilitar botones
+            btnExportJPG.disabled = false;
+            btnCopyHTML.disabled = false;
+            cardGenerated = true;
+
+            return true;
+        }
+
+        /**
+         * Genera el HTML de la tarjeta para copiar
+         * @returns {string} - HTML de la tarjeta
+         */
+        function generateCardHTML() {
+            const nombre = nombreInput.value.trim();
+            const cargo = cargoInput.value.trim();
+            const empresa = empresaInput.value.trim();
+            const email = emailInput.value.trim();
+            const telefono = telefonoInput.value.trim();
+
+            let html = `<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-radius: 12px; padding: 2rem; border: 2px solid #e2e8f0; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); max-width: 400px; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #2563eb, #3b82f6);"></div>
+    <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e293b; margin: 0 0 0.25rem 0;">${nombre}</h3>`;
+
+            if (cargo) {
+                html += `\n    <p style="font-size: 1rem; color: #2563eb; font-weight: 600; margin: 0 0 0.25rem 0;">${cargo}</p>`;
+            }
+
+            if (empresa) {
+                html += `\n    <p style="font-size: 0.9rem; color: #64748b; font-style: italic; margin: 0 0 1.25rem 0;">${empresa}</p>`;
+            } else {
+                html += `\n    <div style="margin-bottom: 1.25rem;"></div>`;
+            }
+
+            html += `\n    <div style="width: 60px; height: 3px; background-color: #2563eb; margin-bottom: 1.25rem; border-radius: 2px;"></div>`;
+
+            if (email || telefono) {
+                html += `\n    <div style="display: flex; flex-direction: column; gap: 0.75rem;">`;
+                
+                if (email) {
+                    html += `\n        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.25rem;">📧</span>
+            <span style="color: #1e293b;">${email}</span>
+        </div>`;
+                }
+
+                if (telefono) {
+                    html += `\n        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.25rem;">📞</span>
+            <span style="color: #1e293b;">${telefono}</span>
+        </div>`;
+                }
+
+                html += `\n    </div>`;
+            }
+
+            html += `\n</div>`;
+
+            return html;
+        }
+
+        // ============================================
+        // Funciones de Acciones
+        // ============================================
+
+        /**
+         * Copia el HTML de la tarjeta al portapapeles
+         */
+        async function copyHTMLToClipboard() {
+            if (!cardGenerated) return;
+
+            try {
+                const html = generateCardHTML();
+                await navigator.clipboard.writeText(html);
+                showToast('¡HTML copiado al portapapeles!');
+            } catch (err) {
+                console.error('Error al copiar:', err);
+                showToast('Error al copiar. Intenta de nuevo.');
+            }
+        }
+
+        /**
+         * Exporta la tarjeta como imagen JPG
+         */
+        function exportToJPG() {
+            if (!cardGenerated) return;
+
+            const cardPreview = document.getElementById('cardPreview');
+            
+            // Crear un canvas para la captura
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Dimensiones de la tarjeta
+            const scale = 2; // Para mejor calidad
+            const width = cardPreview.offsetWidth;
+            const height = cardPreview.offsetHeight;
+            
+            canvas.width = width * scale;
+            canvas.height = height * scale;
+            ctx.scale(scale, scale);
+
+            // Dibujar fondo con gradiente
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, '#ffffff');
+            gradient.addColorStop(1, '#f8fafc');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            // Dibujar borde superior azul
+            const topGradient = ctx.createLinearGradient(0, 0, width, 0);
+            topGradient.addColorStop(0, '#2563eb');
+            topGradient.addColorStop(1, '#3b82f6');
+            ctx.fillStyle = topGradient;
+            ctx.fillRect(0, 0, width, 6);
+
+            // Configurar texto
+            const padding = 32;
+            let yPosition = 40;
+
+            // Nombre
+            const nombre = nombreInput.value.trim();
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 24px Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+            ctx.fillText(nombre, padding, yPosition);
+            yPosition += 30;
+
+            // Cargo
+            const cargo = cargoInput.value.trim();
+            if (cargo) {
+                ctx.fillStyle = '#2563eb';
+                ctx.font = '600 16px Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+                ctx.fillText(cargo, padding, yPosition);
+                yPosition += 22;
+            }
+
+            // Empresa
+            const empresa = empresaInput.value.trim();
+            if (empresa) {
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'italic 14px Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+                ctx.fillText(empresa, padding, yPosition);
+                yPosition += 25;
+            } else {
+                yPosition += 15;
+            }
+
+            // Línea divisoria
+            ctx.fillStyle = '#2563eb';
+            ctx.fillRect(padding, yPosition, 60, 3);
+            yPosition += 25;
+
+            // Email
+            const email = emailInput.value.trim();
+            if (email) {
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '15px Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+                ctx.fillText('📧  ' + email, padding, yPosition);
+                yPosition += 28;
+            }
+
+            // Teléfono
+            const telefono = telefonoInput.value.trim();
+            if (telefono) {
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '15px Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+                ctx.fillText('📞  ' + telefono, padding, yPosition);
+            }
+
+            // Dibujar borde
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(1, 1, width - 2, height - 2);
+
+            // Convertir a imagen y descargar
+            canvas.toBlob(function(blob) {
+                const link = document.createElement('a');
+                link.download = 'tarjeta-' + nombre.replace(/\s+/g, '-').toLowerCase() + '.jpg';
+                link.href = URL.createObjectURL(blob);
+                link.click();
+                URL.revokeObjectURL(link.href);
+                showToast('¡Tarjeta exportada como JPG!');
+            }, 'image/jpeg', 0.95);
+        }
+
+        /**
+         * Muestra el toast de confirmación
+         * @param {string} message - Mensaje a mostrar
+         */
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ============================================
+        // Event Listeners
+        // ============================================
+
+        // Envío del formulario
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateCard();
+        });
+
+        // Generación en tiempo real al escribir
+        [nombreInput, cargoInput, empresaInput, emailInput, telefonoInput].forEach(input => {
+            input.addEventListener('input', function() {
+                // Solo generar si ya se generó una vez o el nombre tiene contenido
+                if (cardGenerated || (nombreInput.value.trim().length > 0)) {
+                    // Resetear errores visuales mientras escribe
+                    if (this === nombreInput) {
+                        if (validateNombre(this.value)) {
+                            this.classList.remove('error');
+                            nombreError.classList.remove('show');
+                        }
+                    }
+                    if (this === emailInput) {
+                        if (validateEmail(this.value) || this.value === '') {
+                            this.classList.remove('error');
+                            emailError.classList.remove('show');
+                        }
+                    }
+                    
+                    // Generar tarjeta si hay nombre válido
+                    if (validateNombre(nombreInput.value) && validateEmail(emailInput.value)) {
+                        generateCard();
+                    }
+                }
+            });
+        });
+
+        // Validación al perder foco
+        nombreInput.addEventListener('blur', function() {
+            if (this.value.trim() !== '') {
+                toggleError(this, nombreError, validateNombre(this.value));
+            }
+        });
+
+        emailInput.addEventListener('blur', function() {
+            if (this.value.trim() !== '') {
+                toggleError(this, emailError, validateEmail(this.value));
+            }
+        });
+
+        // Botón copiar HTML
+        btnCopyHTML.addEventListener('click', copyHTMLToClipboard);
+
+        // Botón exportar JPG
+        btnExportJPG.addEventListener('click', exportToJPG);
+
+        // Inicialización
+        console.log('QuickBuild Cards - Generador de Tarjetas Digitales cargado correctamente');
+    </script>
+</body>
+</html>

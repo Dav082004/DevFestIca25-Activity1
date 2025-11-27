@@ -1,0 +1,30 @@
+{
+  "name": "Taller Copilot CLI - QuickBuild Cards",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-vscode.live-server",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "postCreateCommand": "npm install -g @githubnext/github-copilot-cli && echo '✅ Entorno configurado. Ejecuta: github-copilot-cli auth'",
+  "portsAttributes": {
+    "5500": {
+      "label": "Live Server Preview",
+      "protocol": "http"
+    }
+  },
+  "forwardPorts": [5500]
+}

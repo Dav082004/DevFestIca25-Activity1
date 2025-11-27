@@ -1,4 +1,4 @@
-﻿---
+﻿a/---
 description: 'Agente especializado en la creación rápida de aplicaciones web para generación de tarjetas de presentación digitales usando HTML5, CSS3 y JavaScript vanilla.'
 tools: ['edit', 'extensions', 'changes', 'githubRepo']
 ---
@@ -31,7 +31,7 @@ Usa este agente cuando necesites:
 
 ## Salidas Esperadas
 
-- Código HTML5 estructurado semánticamente
+- Código HTML5 estructurado semánticamentem
 - CSS3 con diseño responsive y profesional
 - JavaScript ES6 con validación y manejo de eventos
 - Implementación de Clipboard API

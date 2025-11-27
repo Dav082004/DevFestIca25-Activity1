@@ -1,0 +1,283 @@
+/* ============================================
+   QuickBuild Cards - Estilos de Tarjeta de Presentación
+   ============================================ */
+
+/* Variables CSS - Paleta de Colores Corporativa */
+:root {
+    --color-primary: #2563eb;
+    --color-secondary: #f8fafc;
+    --color-text: #1e293b;
+    --color-success: #10b981;
+    --color-border: #e2e8f0;
+    --color-white: #ffffff;
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
+    --transition-smooth: all 0.3s ease;
+}
+
+/* ============================================
+   Estilos Base de la Tarjeta
+   ============================================ */
+.card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-card);
+    padding: 24px 32px;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto hover para interactividad */
+.card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+}
+
+/* Línea decorativa superior (simula tarjeta física) */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), #60a5fa);
+}
+
+/* ============================================
+   Información del Contacto
+   ============================================ */
+.card-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.card-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 4px 0;
+    letter-spacing: -0.5px;
+}
+
+.card-title {
+    font-size: 1rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    margin: 0 0 8px 0;
+}
+
+.card-company {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 400;
+    margin: 0;
+}
+
+/* ============================================
+   Detalles de Contacto
+   ============================================ */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background-color: var(--color-secondary);
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+}
+
+.card-info:hover {
+    background-color: #f1f5f9;
+}
+
+.card-info-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.card-info-text {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    word-break: break-word;
+}
+
+.card-info-label {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* ============================================
+   Footer de la Tarjeta
+   ============================================ */
+.card-footer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.card-footer-text {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+/* ============================================
+   Variantes de Tarjeta
+   ============================================ */
+
+/* Tarjeta con estilo oscuro */
+.card--dark {
+    background-color: var(--color-text);
+    border-color: #334155;
+}
+
+.card--dark .card-name,
+.card--dark .card-info-text {
+    color: var(--color-white);
+}
+
+.card--dark .card-title {
+    color: #60a5fa;
+}
+
+.card--dark .card-company,
+.card--dark .card-footer-text {
+    color: #94a3b8;
+}
+
+.card--dark .card-info {
+    background-color: #334155;
+}
+
+.card--dark .card-info:hover {
+    background-color: #475569;
+}
+
+.card--dark .card-header,
+.card--dark .card-footer {
+    border-color: #334155;
+}
+
+/* Tarjeta compacta */
+.card--compact {
+    padding: 16px 20px;
+    max-width: 320px;
+}
+
+.card--compact .card-name {
+    font-size: 1.25rem;
+}
+
+.card--compact .card-info {
+    padding: 6px 10px;
+}
+
+/* ============================================
+   Área de Previsualización
+   ============================================ */
+.card-preview {
+    background-color: var(--color-secondary);
+    padding: 40px 20px;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+/* ============================================
+   Estados y Animaciones
+   ============================================ */
+.card--loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.card--success {
+    border-color: var(--color-success);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Animación de entrada */
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card--animated {
+    animation: cardFadeIn 0.4s ease-out;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 480px) {
+    .card {
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 100%;
+    }
+
+    .card-name {
+        font-size: 1.25rem;
+    }
+
+    .card-title {
+        font-size: 0.875rem;
+    }
+
+    .card-info {
+        padding: 6px 10px;
+    }
+
+    .card-info-text {
+        font-size: 0.8125rem;
+    }
+
+    .card-preview {
+        padding: 24px 16px;
+        min-height: 250px;
+    }
+}
+
+/* Para impresión */
+@media print {
+    .card {
+        box-shadow: none;
+        border: 2px solid var(--color-text);
+        page-break-inside: avoid;
+    }
+
+    .card::before {
+        display: none;
+    }
+
+    .card:hover {
+        transform: none;
+    }
+}

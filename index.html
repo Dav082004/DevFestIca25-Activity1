@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBuild Cards - Generador de Tarjetas Digitales</title>
+    <style>
+        /* Variables CSS - Paleta de colores corporativa */
+        :root {
+            --color-primario: #2563eb;
+            --color-secundario: #f8fafc;
+            --color-texto: #1e293b;
+            --color-exito: #10b981;
+            --color-bordes: #e2e8f0;
+            --color-blanco: #ffffff;
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-secundario);
+            color: var(--color-texto);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Encabezado */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            color: var(--color-primario);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--color-texto);
+            opacity: 0.8;
+        }
+
+        /* Layout principal - Mobile First */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Sección del formulario */
+        .form-section {
+            background-color: var(--color-blanco);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--color-bordes);
+        }
+
+        .form-section h2 {
+            color: var(--color-primario);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        /* Estilos del formulario */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-texto);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--color-bordes);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-primario);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Botón Generar Tarjeta */
+        .btn-generar {
+            width: 100%;
+            padding: 1rem 2rem;
+            background-color: var(--color-primario);
+            color: var(--color-blanco);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-generar:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .btn-generar:active {
+            transform: translateY(0);
+        }
+
+        /* Sección de la tarjeta */
+        .card-section {
+            background-color: var(--color-blanco);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--color-bordes);
+        }
+
+        .card-section h2 {
+            color: var(--color-primario);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        /* Contenedor de la tarjeta generada */
+        #card-container {
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--color-bordes);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .card-placeholder {
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .card-placeholder p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tarjeta generada */
+        .business-card {
+            width: 100%;
+            max-width: 400px;
+            background: linear-gradient(135deg, var(--color-primario) 0%, #1d4ed8 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: var(--color-blanco);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .business-card .card-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .business-card .card-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .business-card .card-position {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .business-card .card-company {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .business-card .card-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .business-card .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .business-card .contact-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Botón de copiar */
+        .btn-copiar {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--color-exito);
+            color: var(--color-blanco);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .btn-copiar:hover {
+            background-color: #059669;
+        }
+
+        .btn-copiar.visible {
+            display: block;
+        }
+
+        /* Mensaje de éxito */
+        .success-message {
+            background-color: var(--color-exito);
+            color: var(--color-blanco);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .success-message.visible {
+            display: block;
+        }
+
+        /* Responsive - Tablet y Desktop */
+        @media (min-width: 768px) {
+            .container {
+                padding: 3rem 2rem;
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            .main-content {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .form-section,
+            .card-section {
+                flex: 1;
+                padding: 2rem;
+            }
+
+            .form-section h2,
+            .card-section h2 {
+                font-size: 1.5rem;
+            }
+
+            #card-container {
+                min-height: 300px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            color: var(--color-texto);
+            opacity: 0.7;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Encabezado -->
+        <header>
+            <h1>QuickBuild Cards</h1>
+            <p>Genera tu tarjeta de presentación digital en segundos</p>
+        </header>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <!-- Sección del Formulario -->
+            <section class="form-section">
+                <h2>Información de Contacto</h2>
+                <form id="card-form">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez García" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cargo">Cargo</label>
+                        <input type="text" id="cargo" name="cargo" placeholder="Ej: Desarrollador Senior" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="empresa">Empresa</label>
+                        <input type="text" id="empresa" name="empresa" placeholder="Ej: Tech Solutions S.A." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="Ej: juan.perez@techsolutions.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="Ej: +51 987 654 321" required>
+                    </div>
+
+                    <button type="submit" class="btn-generar">Generar Tarjeta</button>
+                </form>
+            </section>
+
+            <!-- Sección de la Tarjeta -->
+            <section class="card-section">
+                <h2>Tu Tarjeta Digital</h2>
+                <div id="card-container">
+                    <div class="card-placeholder">
+                        <p>📇</p>
+                        <p>Tu tarjeta aparecerá aquí</p>
+                        <p>Completa el formulario y haz clic en "Generar Tarjeta"</p>
+                    </div>
+                </div>
+                <button id="btn-copiar" class="btn-copiar">📋 Copiar información al portapapeles</button>
+                <div id="success-message" class="success-message">✅ ¡Información copiada al portapapeles!</div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>QuickBuild Cards © 2025 - Tarjetas de presentación digitales</p>
+        </footer>
+    </div>
+
+    <script>
+        // Elementos del DOM
+        const form = document.getElementById('card-form');
+        const cardContainer = document.getElementById('card-container');
+        const btnCopiar = document.getElementById('btn-copiar');
+        const successMessage = document.getElementById('success-message');
+
+        // Variables para almacenar los datos de la tarjeta
+        let cardData = null;
+
+        // Evento para generar la tarjeta
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Obtener valores del formulario
+            const nombre = document.getElementById('nombre').value.trim();
+            const cargo = document.getElementById('cargo').value.trim();
+            const empresa = document.getElementById('empresa').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const telefono = document.getElementById('telefono').value.trim();
+
+            // Validar que todos los campos estén llenos
+            if (!nombre || !cargo || !empresa || !email || !telefono) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
+            // Almacenar datos de la tarjeta
+            cardData = { nombre, cargo, empresa, email, telefono };
+
+            // Generar HTML de la tarjeta
+            const cardHTML = `
+                <div class="business-card">
+                    <div class="card-header">
+                        <div class="card-name">${nombre}</div>
+                        <div class="card-position">${cargo}</div>
+                        <div class="card-company">${empresa}</div>
+                    </div>
+                    <div class="card-contact">
+                        <div class="contact-item">
+                            <span class="contact-icon">✉️</span>
+                            <span>${email}</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <span>${telefono}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Insertar la tarjeta en el contenedor
+            cardContainer.innerHTML = cardHTML;
+
+            // Mostrar botón de copiar
+            btnCopiar.classList.add('visible');
+
+            // Ocultar mensaje de éxito si estaba visible
+            successMessage.classList.remove('visible');
+        });
+
+        // Evento para copiar la información al portapapeles
+        btnCopiar.addEventListener('click', function() {
+            if (!cardData) return;
+
+            // Formatear texto para copiar
+            const textToCopy = `
+${cardData.nombre}
+${cardData.cargo}
+${cardData.empresa}
+
+Email: ${cardData.email}
+Teléfono: ${cardData.telefono}
+            `.trim();
+
+            // Usar Clipboard API
+            navigator.clipboard.writeText(textToCopy)
+                .then(function() {
+                    // Mostrar mensaje de éxito
+                    successMessage.classList.add('visible');
+                    
+                    // Ocultar mensaje después de 3 segundos
+                    setTimeout(function() {
+                        successMessage.classList.remove('visible');
+                    }, 3000);
+                })
+                .catch(function(err) {
+                    console.error('Error al copiar:', err);
+                    alert('No se pudo copiar la información. Por favor, inténtalo de nuevo.');
+                });
+        });
+    </script>
+</body>
+</html>

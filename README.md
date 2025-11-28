@@ -1,7 +1,4 @@
-# 🤖 Taller: Automatización de Proyectos con GitHub Copilot y MCP Server
-
-## DevFest Ica 2025
----
+# 🤖 DevFest Ica 2025 - Taller: Automatización de Proyectos con GitHub Copilot y MCP Server
 
 ## 🎯 Objetivo del Taller
 

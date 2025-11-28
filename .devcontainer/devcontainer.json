@@ -1,5 +1,5 @@
 {
-  "name": "Taller Copilot CLI - QuickBuild Cards",
+  "name": "Taller Copilot",
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
@@ -10,21 +10,22 @@
       "extensions": [
         "GitHub.copilot",
         "GitHub.copilot-chat",
-        "ms-vscode.live-server",
-        "esbenp.prettier-vscode"
+        "ritwickdey.LiveServer"
       ],
       "settings": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
+        "liveServer.settings.port": 5500,
+        "liveServer.settings.root": "/workspace",
+        "editor.formatOnSave": false
       }
     }
   },
-  "postCreateCommand": "npm install -g @githubnext/github-copilot-cli && echo '✅ Entorno configurado. Ejecuta: github-copilot-cli auth'",
+  "postCreateCommand": "git config --global --add safe.directory /workspaces/XperienceCampusWorkshop",
+  "remoteUser": "root",
+  "forwardPorts": [5500],
   "portsAttributes": {
     "5500": {
-      "label": "Live Server Preview",
-      "protocol": "http"
+      "label": "Live Server",
+      "onAutoForward": "notify"
     }
-  },
-  "forwardPorts": [5500]
+  }
 }

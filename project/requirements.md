@@ -21,6 +21,7 @@ Desarrollar un MVP funcional en 10 minutos que permita generar tarjetas de prese
 
 ### Funcionalidades
 - [ ] Generación en tiempo real
+- [ ] Boton para descargar la tarjeta en .jpg
 - [ ] Botón "Copiar HTML" al portapapeles
 - [ ] Mensaje de confirmación al copiar
 - [ ] Diseño responsive

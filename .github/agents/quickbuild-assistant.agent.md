@@ -1,4 +1,4 @@
-﻿a/---
+﻿---
 description: 'Agente especializado en la creación rápida de aplicaciones web para generación de tarjetas de presentación digitales usando HTML5, CSS3 y JavaScript vanilla.'
 tools: ['edit', 'extensions', 'changes', 'githubRepo']
 ---
